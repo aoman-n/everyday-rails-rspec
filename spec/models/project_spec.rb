@@ -38,5 +38,8 @@ RSpec.describe Project, type: :model do
   end
 
   it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
+  it { is_expected.to belong_to(:owner).class_name(:User).with_foreign_key('user_id') }
+  it { is_expected.to have_many :notes }
+  it { is_expected.to have_many :tasks }
 
 end
