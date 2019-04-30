@@ -52,4 +52,12 @@ RSpec.describe User, type: :model do
     user2 = FactoryBot.create(:user)
     expect(true).to be_truthy
   end
+
+  # shoulda matchersを利用したバリデーションのテスト
+  it { is_expected.to validate_presence_of :first_name }
+  it { is_expected.to validate_presence_of :last_name }
+  it { is_expected.to validate_presence_of :email }
+  # deviseが設定しているバリデーション、大文字小文字を区別しないことをテスト(not case sensitive)
+  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+
 end
