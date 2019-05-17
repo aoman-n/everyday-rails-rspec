@@ -37,4 +37,6 @@ RSpec.describe Project, type: :model do
     expect(project.notes.length).to eq 5
   end
 
+  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
+
 end
