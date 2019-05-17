@@ -54,6 +54,32 @@ RSpec.describe Note, type: :model do
         expect(Note.search("message")).to be_empty
       end
     end
+  end
 
+  # it "ユーザ名の取得処理をユーザーモデルに委譲すること(モックスタブ使わない)" do
+  #   user = FactoryBot.create(:user, first_name: "Hiroaki", last_name: "Aoba")
+  #   note = Note.new(user: user)
+  #   p note.user
+  #   expect(note.user_name).to eq "Hiroaki Aoba"
+  # end
+
+  # モック、スタブ使用
+  it "1ユーザ名の取得処理をユーザーモデルに委譲すること" do
+    user = double("user", name: "Fake User")
+    note = Note.new
+    # Noteモデルのnoteインスタンスのuserメソッドを実行した時
+    # doubleで作ったuserが返すようにする。
+    # このuserはnameしか返せない。
+    # p note.user => テストダブルで作ったユーザーが取得できる
+    allow(note).to receive(:user).and_return(user)
+    expect(note.user_name).to eq "Fake User"
+  end
+
+  # モック（検証機能付きのverified double）、スタブ使用
+  it "2ユーザ名の取得処理をユーザーモデルに委譲すること with verified double" do
+    user = instance_double("User", name: "Fake User")
+    note = Note.new
+    allow(note).to receive(:user).and_return(user)
+    expect(note.user_name).to eq "Fake User"
   end
 end
