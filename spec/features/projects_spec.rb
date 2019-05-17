@@ -24,14 +24,18 @@ RSpec.feature "Projects", type: :feature do
   scenario "ユーザーはプロジェクトを編集する" do
     project
     sign_in user
-    visit root_path
-    click_link project.name
+    go_to_project(project.name)
 
     click_link "Edit"
     input_project("Update name", "Update description")
     click_button "Update Project"
 
     expect(project.reload.name).to eq "Update name"
+  end
+
+  def go_to_project(name)
+    visit root_path
+    click_link name
   end
 
   def input_project(name, description)
