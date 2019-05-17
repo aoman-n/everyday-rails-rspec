@@ -16,4 +16,14 @@ RSpec.describe HomeController, type: :controller do
 
   end
 
+  describe "subject sample" do
+    # subject(:action) { get :index }
+    # it { is_expected.to be_success }
+    # it { is_expected.to have_http_status "200" }
+    subject { get :index }
+    it { is_expected.to be_success }
+    it { is_expected.to have_http_status "200" }
+    it { expect(subject.status).to eq 200 }
+  end
+
 end
